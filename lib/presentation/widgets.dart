@@ -14,7 +14,9 @@ class ScreenElements {
         Icon(CupertinoIcons.airplane, color: Colors.white,),
         Text('you are browsing offline', style: TextStyle(color: Colors.white),)
       ],));
-
-
   }
+
+
+
+
 }

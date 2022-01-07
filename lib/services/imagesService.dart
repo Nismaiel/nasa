@@ -1,9 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:api_cache_manager/api_cache_manager.dart';
-import 'package:api_cache_manager/models/cache_db_model.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:nasa/data/picturesModel.dart';
 import 'package:path_provider/path_provider.dart';

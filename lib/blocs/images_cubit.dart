@@ -25,7 +25,7 @@ try {
   emit(OfflineImagesLoaded(images: imagesList));
 }catch(e){
   print(e.toString());
-  emit(ImagesError(message: 'There was a problem loading Images'));
+  emit(ImagesError(message: 'There was a problem loading Images,pull to refresh'));
 }
   }
 }
