@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider( providers: [
       BlocProvider(create: (context) => ImagesCubit(),),
     ],
-      child: const MaterialApp(
+      child: const MaterialApp(debugShowCheckedModeBanner: false,
         title: 'Nasa pictures',
         home: HomeScreen(),
       ),

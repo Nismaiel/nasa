@@ -14,6 +14,16 @@ try {
   final List<Images>imagesList = await imagesService.getImages();
   emit(ImagesLoaded(images: imagesList));
 }catch(e){
+  //if there is an error the app will load offline data
+  getAllCachedImages();
+}
+  }
+  getAllCachedImages()async{
+try {
+  emit(ImagesLoading());
+  final List<Images>imagesList = await imagesService.getCachedImages();
+  emit(OfflineImagesLoaded(images: imagesList));
+}catch(e){
   print(e.toString());
   emit(ImagesError(message: 'There was a problem loading Images'));
 }

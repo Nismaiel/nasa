@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nasa/blocs/images_cubit.dart';
 import 'package:nasa/data/picturesModel.dart';
@@ -32,11 +33,10 @@ class _ImageItemState extends State<ImageItem> {
               borderRadius: BorderRadius.circular(10),
               child: Stack(
                 children: <Widget>[
-                  Image.network(
-                    widget.image.url.toString(),
-                    height: MediaQuery.of(context).size.height / 3,
+                  CachedNetworkImage(imageUrl:widget.image.url.toString(),height: MediaQuery.of(context).size.height / 3,
                     width: MediaQuery.of(context).size.width / 2,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.cover,progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        CircularProgressIndicator(value: downloadProgress.progress),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,

@@ -1,19 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nasa/blocs/images_cubit.dart';
 import 'package:nasa/data/picturesModel.dart';
+import 'package:nasa/presentation/widgets.dart';
 
-class ImageDetails extends StatefulWidget {
+class ImageDetails extends StatelessWidget {
   final Images image;
+  const ImageDetails({required this.image,Key? key}) : super(key: key);
 
-  const ImageDetails({Key? key, required this.image}) : super(key: key);
-
-  @override
-  _ImageDetailsState createState() => _ImageDetailsState();
-}
-
-class _ImageDetailsState extends State<ImageDetails>
-    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    ScreenElements screenElements=ScreenElements();
     return Container(
       color: const Color(0xFFFFFFFF),
       child: Scaffold(
@@ -21,18 +19,14 @@ class _ImageDetailsState extends State<ImageDetails>
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 2.2,
-                    child: Image.network(
-                      widget.image.url.toString(),
-                      fit: BoxFit.fill,
-                    ),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2.2,
+                  child: CachedNetworkImage(imageUrl:
+                    image.url.toString(),
+                    fit: BoxFit.fill,
                   ),
-                ],
-              ),
+                ),
               Container(
                 decoration: const BoxDecoration(
                   color: Color(0xFFFFFFFF),
@@ -47,7 +41,7 @@ class _ImageDetailsState extends State<ImageDetails>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        widget.image.title.toString(),
+                        image.title.toString(),
                         textAlign: TextAlign.left,
                         maxLines: 2,
                         style: const TextStyle(
@@ -58,7 +52,7 @@ class _ImageDetailsState extends State<ImageDetails>
                         ),
                       ),
                       Text(
-                        widget.image.date.toString(),
+                       image.date.toString(),
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontSize: 22,
@@ -67,6 +61,11 @@ class _ImageDetailsState extends State<ImageDetails>
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      BlocBuilder<ImagesCubit,ImagesState>(builder: (context, state) {
+                        if(state is OfflineImagesLoaded){
+                          return screenElements.offlineSign();
+                        }else{return const SizedBox();}
+                      },),
                       const Divider(),
                       const Text(
                         'explanation:',
@@ -77,7 +76,7 @@ class _ImageDetailsState extends State<ImageDetails>
                         child: SizedBox(
                             width: MediaQuery.of(context).size.width / 1.1,
                             child: Text(
-                              widget.image.explanation.toString(),
+                             image.explanation.toString(),
                               textAlign: TextAlign.left,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w600,
