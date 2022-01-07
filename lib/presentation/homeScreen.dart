@@ -21,10 +21,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ScreenElements screenElements = ScreenElements();
   final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  late StreamSubscription<ConnectivityResult> connectivitySubscription;
 
+  //monitor user's connectivity as he uses the app
+  //and change the app's state according to the connectivity
   listenToConnectivity() {
-    _connectivitySubscription = Connectivity()
+    connectivitySubscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       // Got a new connectivity status!
@@ -37,6 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
+//capture the user's connectivity on the app launce
+  //and emit the first state of the app
   Future<void> initConnectivity() async {
     ConnectivityResult result = ConnectivityResult.none;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -103,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title:const Text('NASA'),actions: [IconButton(onPressed: (){
+    return Scaffold(appBar: AppBar(title:const Text('NASA'),backgroundColor: Colors.black,actions: [IconButton(onPressed: (){
       showSearch(context: context, delegate: SearchImages());
     }, icon:const Icon(Icons.search))],),body: SafeArea(
       child: BlocBuilder<ImagesCubit, ImagesState>(
