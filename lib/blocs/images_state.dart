@@ -1,7 +1,10 @@
 part of 'images_cubit.dart';
 
 @immutable
-abstract class ImagesState {}
+abstract class ImagesState {
+  final List<Images>images;
+ const ImagesState({this.images=const <Images>[]});
+}
 
 class ImagesInitial extends ImagesState {}
 class ImagesLoading extends ImagesState{}

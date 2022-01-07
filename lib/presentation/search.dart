@@ -8,6 +8,7 @@ import 'imageDetails.dart';
 import 'imageItem.dart';
 
 class SearchImages extends SearchDelegate {
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -33,11 +34,12 @@ class SearchImages extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     return BlocBuilder<ImagesCubit, ImagesState>(
       builder: (context, state) {
-        if (query.isNotEmpty && state is ImagesLoaded) {
+      if(state is ImagesLoaded||state is OfflineImagesLoaded){
+        if (query.isNotEmpty ) {
           List<Images> images = state.images
               .where((element) =>
-                  element.title!.toLowerCase().contains(query.toLowerCase()) ||
-                  element.date!.toLowerCase().contains(query))
+          element.title!.toLowerCase().contains(query.toLowerCase()) ||
+              element.date!.toLowerCase().contains(query))
               .toList();
           return GridView.builder(
             shrinkWrap: true,
@@ -56,7 +58,7 @@ class SearchImages extends SearchDelegate {
                   child: ImageItem(image: images[index]));
             },
           );
-        } else {
+        }else {
           return const Center(
             child: Text(
               'search images',
@@ -64,6 +66,14 @@ class SearchImages extends SearchDelegate {
             ),
           );
         }
+      } else {
+        return const Center(
+          child: Text(
+            'search images',
+            style: TextStyle(color: Colors.black),
+          ),
+        );
+      }
       },
     );
   }
